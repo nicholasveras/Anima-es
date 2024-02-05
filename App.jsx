@@ -6,7 +6,7 @@ export default function App(){
   const altAnimada = useRef(new Animated.Value(50)).current
 
   useEffect(()=> {
-    Animated.timing(larAnimada,{
+    Animated.timing(altAnimada,{
       toValue: 300,
       duration: 2000,
       useNativeDriver: false
