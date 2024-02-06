@@ -2,12 +2,12 @@ import React, {useRef, useEffect} from "react";
 import {SafeAreaView ,View, Text, StyleSheet, Animated} from 'react-native'
 
 export default function App(){
-  const larAnimada = useRef(new Animated.Value(150)).current;
-  const altAnimada = useRef(new Animated.Value(50)).current;
-  const opacidadeAnimada = useRef(new Animated.Value(1)).current;
+  const larAnimada = useRef(new Animated.Value(150)).current
+  const altAnimada = useRef(new Animated.Value(50)).current
+  const opacidadeAnimada = useRef(new Animated.Value(1)).current
 
   useEffect(()=> {
-    Animated.sequence([
+    Animated.parallel([
       Animated.timing(larAnimada,{
         toValue: 300,
         duration: 2000,
@@ -16,11 +16,6 @@ export default function App(){
       Animated.timing(altAnimada,{
         toValue: 200,
         duration: 2000,
-        useNativeDriver: false
-      }),
-      Animated.timing(opacidadeAnimada,{
-        toValue: 0,
-        duration: 1000,
         useNativeDriver: false
       })
     ]).start();
