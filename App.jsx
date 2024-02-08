@@ -2,39 +2,51 @@ import React, {useRef, useEffect} from "react";
 import {SafeAreaView ,View, Text, StyleSheet, Animated} from 'react-native'
 
 export default function App(){
-  const larAnimada = useRef(new Animated.Value(150)).current
+  const larAnimada = useRef(new Animated.Value(0)).current
   const altAnimada = useRef(new Animated.Value(50)).current
   //const opacidadeAnimada = useRef(new Animated.Value(0)).current
 
   useEffect(()=> {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(larAnimada, {
-          toValue: 300,
-          duration: 2000,
-          useNativeDriver: false
-        }),
-        Animated.timing(larAnimada, {
-          toValue: 150,
-          duration: 2000,
-          useNativeDriver: false
-        })
-      ])
-    ).start();
+
+    Animated.sequence([
+      Animated.timing(larAnimada, {
+        toValue: 100,
+        duration: 4000,
+        useNativeDriver: false
+      }),
+      Animated.timing(altAnimada, {
+        toValue: 100,
+        duration: 4000,
+        useNativeDriver: false
+      })
+    ]).start(({finished}) => {
+      alert("Animação Finalizada!")
+    });
+
   }, []);
+
+  let porcentagemLargura = larAnimada.interpolate({
+    inputRange: [0, 100], // Entrada, vai de quanto até quanto
+    outputRange: ['0%', '100%'] // Vai sair de 0% até 100%
+  })
+
+  let porcentagemAltura = altAnimada.interpolate({
+    inputRange: [50, 100],
+    outputRange: ['5%', '100%']
+  })
 
   return(
     <SafeAreaView style={styles.container}>
       <Animated.View 
       style={{
-        width: larAnimada, 
-        height: altAnimada, 
-        backgroundColor: '#4169e1', 
+        width: porcentagemLargura, 
+        height: porcentagemAltura, 
+        backgroundColor: '#ff0000', 
         justifyContent: 'center',
-        borderRadius: 50
+
         //opacity: opacidadeAnimada
         }}>
-        <Text style={{textAlign: 'center', fontSize: 22, color: '#FFF'}}>Carregando...</Text>
+        
       </Animated.View>
     </SafeAreaView>
   );
