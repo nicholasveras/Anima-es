@@ -1,53 +1,34 @@
-import React, {useRef, useEffect} from "react";
-import {SafeAreaView ,View, Text, StyleSheet, Animated} from 'react-native'
+import React, {useRef} from "react";
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity } from "react-native";
+
+import * as Animatable from 'react-native-animatable';
+
+const ButtonAnimated = Animatable.createAnimatableComponent(TouchableOpacity);
 
 export default function App(){
-  const larAnimada = useRef(new Animated.Value(0)).current
-  const altAnimada = useRef(new Animated.Value(50)).current
-  //const opacidadeAnimada = useRef(new Animated.Value(0)).current
+  const buttonRef = useRef(null);
 
-  useEffect(()=> {
-
-    Animated.sequence([
-      Animated.timing(larAnimada, {
-        toValue: 100,
-        duration: 4000,
-        useNativeDriver: false
-      }),
-      Animated.timing(altAnimada, {
-        toValue: 100,
-        duration: 4000,
-        useNativeDriver: false
-      })
-    ]).start(({finished}) => {
-      alert("Animação Finalizada!")
-    });
-
-  }, []);
-
-  let porcentagemLargura = larAnimada.interpolate({
-    inputRange: [0, 100], // Entrada, vai de quanto até quanto
-    outputRange: ['0%', '100%'] // Vai sair de 0% até 100%
-  })
-
-  let porcentagemAltura = altAnimada.interpolate({
-    inputRange: [50, 100],
-    outputRange: ['5%', '100%']
-  })
+  function handleClick(){
+    buttonRef.current.bounce();
+  }
 
   return(
     <SafeAreaView style={styles.container}>
-      <Animated.View 
-      style={{
-        width: porcentagemLargura, 
-        height: porcentagemAltura, 
-        backgroundColor: '#ff0000', 
-        justifyContent: 'center',
+      <Animatable.Text 
+      style={styles.title}
+      animation='shake'
+      >
+        Nicholas Dev
+      </Animatable.Text>
 
-        //opacity: opacidadeAnimada
-        }}>
-        
-      </Animated.View>
+      <ButtonAnimated 
+      style={styles.button} 
+      animation="pulse" 
+      ref={buttonRef}
+      onPress={handleClick}
+      >
+        <Text style={{color: "#FFF"}}>Anima!</Text>
+      </ButtonAnimated>
     </SafeAreaView>
   );
 }
@@ -57,5 +38,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  title: {
+    fontSize: 25,
+  },
+  button: {
+    width: '70%',
+    height: 30,
+    backgroundColor: '#121212',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 25,
   }
 })
